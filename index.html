@@ -31,7 +31,7 @@
     function RunProgram() {
         // fetch the geojson file
 
-        fetch('2015REPORDSIMPLIFIED.json')
+        fetch('2015REPORDSIMPLIFIED.geojson')
         .then(constitdata => response.json())
         .then(constitdata => console.log(constitdata[0]))
         .catch(err => console.log(err));
