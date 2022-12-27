@@ -1,63 +1,136 @@
 <html>
-<title>Payload Front-End Processing</title>
+<title>Payload Testbed Demonstrator</title>
 <head>
-<script src="2015REPORDSIMPLIFIED.geojson" type="text/javascript"></script>
-<script src="payload.min.js" type="text/javascript"></script>
+<!-- Halfmoon CSS -->
+<link href="https://cdn.jsdelivr.net/npm/halfmoon@1.1.1/css/halfmoon-variables.min.css" rel="stylesheet" />
+<script src="https://cdn.jsdelivr.net/npm/halfmoon@1.1.1/js/halfmoon.min.js"></script>
 </head>
 <body>
-    <div>
-        <h1>Instructions - Kanata Lookup?</h1>
-        <p>Geojson is stupid and accepts longitude before latitude. If you're pulling from Google Maps or off a map, reverse your coordinate entries because REASONS.</p>
-        <label for="lat">Longitude</label>
-        <input type="text" value="45.30990078271359" name="Longitude" class="required" id="inputlong" required>
-        <label for="lat">Latitude</label>
-        <input type="text" value="-75.90568081058741" name="Latitude" class="required" id="inputlat" required>
-        <input type="submit" value="test" name="testfunction" id="submission" class="button" onclick="TestKanata()">
+    <div class="page-wrapper">
+      <div class="content-wrapper">
+            <div class="container">
+                <!-- Postal Input -->
+                <div class="form-group" class="w-400 mw-full">
+                  <label for="postalCode" class="required">Postal code</label>
+                  <input type="text" class="form-control" id="postalCode" placeholder="Enter Postal Code" required="required">
+                  <input class="btn btn-primary" type="submit" value="Submit" onclick="PayloadRun()">
+                </div>
+        
+                <!-- Telemetry -->
+                <div class="form-group" class="w-400 mw-full">
+                    <label for="long">Longitude</label>
+                    <input type="text" class="form-control required" value="" name="Longitude" id="inputlong" required>
+                    <label for="lat">Latitude</label>
+                    <input type="text" value="" name="Latitude" class=" form-control required" id="inputlat" required>
+                    <p id="resultreport">None</p>
+                    <p id="stats">None</p>
+                </div>
+
+                
+                
+               
+      
+            </div>
+        </div>
     </div>
-    <div>
-        <h1>Results
-        </h1>
-        <h3 id="resultreport">None</h3>
-    </div>
-    <div>
-</body>
+  </body>
+        <script>
 
+           async function PayloadRun() {
+                  await GetLatLong();
+                  doit();
+                }
 
-<script>
+           function GetLatLong(postalCode) {
+                    var postalCode = document.getElementById("postalCode").value;
+                    var apiKey = "AIzaSyC7_-rbL5TEj7Yjww2MmL9BSSDqN8uYvqo"
+                    const address = `${postalCode}, Canada`;
+                    const url = `https://maps.googleapis.com/maps/api/geocode/json?address=${encodeURIComponent(address)}&key=${apiKey}`;
+                    return fetch(url)
+                        .then(response => response.json())
+                        .then(data => {
+                        if (data.status === 'OK') {
+                            const result = data.results[0];
+                            const location = result.geometry.location;
+                            document.getElementById("inputlong").value = location.lng
+                            document.getElementById("inputlat").value = location.lat
+                            return {
+                            latitude: location.lat,
+                            longitude: location.lng
+                            };
+                        } else {
+                            throw new Error(data.error_message);
+                        }
+            
+                    
+                    });
+                    
+                        
+            }
 
-function TestKanata() {
-// grab the GeoJSON file via network request and pare into object
-        fetch('https://apollopublicaffairs.github.io/payload-embed/2015REPORDSIMPLIFIED.geojson').then(function (response){
-                return response.json();;
-        }).then(function (constitdata) {
-    //declare all the variables
-        var poly = turf.polygon(constitdata.features[90].geometry.coordinates);
-        var long = new String (document.getElementById("inputlong").value);
-        var lat = new String (document.getElementById("inputlat").value);
-        var pt = turf.point([lat,long]);
+            function pointInPolygon(polygon, point) {
+                    let odd = false;
+                    for (let i = 0, j = polygon.length - 1; i < polygon.length; i++) {
+                        if (((polygon[i][1] > point[1]) !== (polygon[j][1] > point[1]))
+                            && (point[0] < ((polygon[j][0] - polygon[i][0]) *
+                                (point[1] - polygon[i][1]) /
+                                (polygon[j][1] -
+                                polygon[i][1]) + polygon[i][0]))) {
+                        odd = !odd;
+                    }        j = i;
+                    }
+                    return odd;
+            }
 
-        // log data stream for error checking
-        console.log("Poly");
-        console.log(poly);
-        console.log("Long");
-        console.log(long);
-        console.log("lat");
-        console.log(lat);
-        console.log("pt");
-        console.log(pt);
-
-        // run the evaluation of of whether the point is in Kanata.
-        var eval = turf.booleanPointInPolygon(pt, poly)
-        // output result of test
-        console.log(eval)
-        document.getElementById("resultreport").innerHTML = eval
+            function pip(polygon, lon, lat) {
+            point = [lon, lat]
+            var startTime = performance.now()
+            retval = pointInPolygon(polygon, point)
+            var endTime = performance.now()
+            return { ok: retval, stats: `(<i>Point-in-Polygon Algo took ${endTime - startTime} millseconds</i>)`}
+            }
        
-}).catch(function (error) {
-    console.error('Something fucked up')
-})
+            function lookup(db, lon, lat) {
+                var startTime = performance.now()
+                name = null
+                for (var i = 0 in db["features"]) {
+                res = pip(db["features"][i]["geometry"]["coordinates"][0],
+                        lon, lat)
+                if(res.ok == true) {
+                    name = db["features"][i]["properties"]["ENNAME"]
+                    break
+                }
+                }
+                var endTime = performance.now()
+                console.log("Start time lookup: ", startTime)
+                console.log("End time lookup: ", endTime)
 
-}
+                stats = "We searched <strong>" + i + " Electoral Districts</strong> and returned results in " + `<strong> ${endTime -
+                startTime} milliseconds</strong> ` + res.stats
+                
+                return { state: res.ok, result: name , stats: stats }
+            }
 
+
+            function doit() {
+                dbfile = "https://apollopublicaffairs.github.io/payload-embed/2015REPORDSIMPLIFIED.geojson"
+                fetch(dbfile).then(function (response) {
+                return response.json();
+                }).then(function (db) {
+
+                var lon = document.getElementById("inputlong").value;
+                var lat = document.getElementById("inputlat").value;
+                console.log("latitude is: ", lat)
+                console.log("Longtitude is:", lon)
+
+                result = lookup(db, lon, lat)
+                document.getElementById("resultreport").innerHTML = result.result
+                document.getElementById("stats").innerHTML = result.stats
+                
+                }).catch(function (error) {
+                console.error("Something went wrong")
+                })
+            }
 </script>
 
 </html>
