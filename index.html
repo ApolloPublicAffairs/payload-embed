@@ -18,30 +18,71 @@
       <div class="page-wrapper">
         <div class="content-wrapper">
         <img src="https://apollopublicaffairs.github.io/payload-embed/Payload.svg" width="300px">
-            <div class="container" style="min-height: 10vh;">
+            <div class="container">
                 <div class="row">
-                    <div class="col-12"><h4>Federal Riding Decoder Testbed</h4></div>
+                    <div class="col-12"><h4 style="padding:5vh;">Advocacy Testbed</h4></div>
               
                 </div>
             </div>
 
-            <div class="container" style="min-height: 10vh;">
+            <div class="container">
+                <div class="row">
+                <form autocomplete="on">
+                    <!-- First row -->
+                    
+                    <div class="form-row row-eq-spacing-sm">
+                      <div class="col-sm">
+                        <label for="fname" class="required">First name</label>
+                        <input type="text" class="form-control" id="fname" placeholder="First name" required="required" autocomplete="fname">
+                      </div>
+                      <div class="col-sm">
+                        <label for="lname" class="required">Last name</label>
+                        <input type="text" class="form-control" id="lname" placeholder="Last name" required="required" autocomplete="lname">
+                      </div>
+                    </div>
+                  
+                    <div class="form-row row-eq-spacing-sm">
+                        <div class="col-sm">
+                          <label for="email" class="required">Email Address</label>
+                          <input type="email" class="form-control" id="email" placeholder="Email Address" required="required" autocomplete="email">
+                        </div>
+                      </div>
+                  
+                    <!-- Third row container -->
+                    <div class="form-row row-eq-spacing-sm">
+                        <div class="col-sm">
+                            <label for="postalCode" class="required">Postal code</label>
+                            <input type="text" class="form-control" id="postalCode" placeholder="Enter Postal Code" required="required" autocomplete="postal">
+                        </div><div class="col-sm">
+                          <label for="tel" class="required">Phone Number</label>
+                          <input type="tel" class="form-control" id="phone" name="phone" placeholder="Enter Your Cell Phone Number"  required="required" autocomplete="tel">
+                        </div>
+                      </div>
+                    
+                  
+                    <!-- Submit button container -->
+                    <div class="text-right"> <!-- text-right = text-align: right -->
+                        <input class="btn btn-primary" type="submit" value="Submit" onclick="PayloadRun()">
+                    </div>
+                  </form>
+
+            </div>
+
+            <div class="container" style="min-height: 10vh;padding:5vw;">
                 <div class="row">
                  
-                  <div class="col-12"><div class="form-group" class="w-400 mw-full">
-                    <label for="postalCode" class="required">Postal code</label>
-                    <input type="text" class="form-control" id="postalCode" placeholder="Enter Postal Code" required="required">
-                    <input class="btn btn-primary" type="submit" value="Submit" onclick="PayloadRun()">
+                  <div class="col-12">
+                    <div class="form-group">
+                   
+                  
                   </div>
-          
-                  <!-- Telemetry -->
-                      <p id="resultreport">None</p>
-                      <p id="stats">None</p></div>
+                  <div><h4 id="mainreport"></h4></div>
+                  <div id="telemetry"><span style="font-size:8px;font-weight:400;" id="resultreport"></span>&nbsp;<span style="font-size:8px;font-weight:400;"  id="stats"></span></div>
                  
                 </div>
             </div>
 
-          
+        </div>  
         </div>
         <!-- Content wrapper end -->
     
