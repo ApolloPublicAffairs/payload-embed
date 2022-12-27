@@ -89,7 +89,7 @@ function doit() {
   console.log("Longtitude is:", lon)
 
   result = lookup(db, lon, lat)
-  document.getElementById("resultreport").innerHTML = result.result
+  document.getElementById("resultreport").innerHTML = "2015 Rep. Order Electoral District is <strong>" + result.result + "</strong>"
   document.getElementById("stats").innerHTML = result.stats
   
   }).catch(function (error) {
