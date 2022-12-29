@@ -1,101 +1,22 @@
- <!DOCTYPE html>
-    <html lang="en">
-    <head>
-      <!-- Meta tags -->
-      <meta charset="utf-8" />
-      <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
-      <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport" />
-      <meta name="viewport" content="width=device-width" />
-      <!-- Favicon and title -->
-      <link rel="icon" href="path/to/fav.png">
-      <title>Payload Testbed Demonstrator</title>
-      <!-- Halfmoon CSS -->
-      <link href="https://cdn.jsdelivr.net/npm/halfmoon@1.1.1/css/halfmoon-variables.min.css" rel="stylesheet" />
-      <!-- Payload Javascript File-->
-      <script src="payload.js"></script>
-    </head>
-    <body class="with-custom-webkit-scrollbars with-custom-css-scrollbars" data-dm-shortcut-enabled="true" data-set-preferred-mode-onload="true">
-      <div class="page-wrapper">
-        <div class="content-wrapper">
-        <img src="https://apollopublicaffairs.github.io/payload-embed/Payload.svg" width="300px">
-            <div class="container">
-                <div class="row">
-                    <div class="col-12"><h4 style="padding:5vh;">Advocacy Testbed</h4></div>
-              
-                </div>
-            </div>
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <title>Payload Technology Demonstrator</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
 
-            <div class="container">
-                <div class="row">
-                <form autocomplete="on">
-                    <!-- First row -->
-                    
-                    <div class="form-row row-eq-spacing-sm">
-                      <div class="col-sm">
-                        <label for="fname" class="required">First name</label>
-                        <input type="text" class="form-control" id="fname" placeholder="First name" required="required" autocomplete="fname">
-                      </div>
-                      <div class="col-sm">
-                        <label for="lname" class="required">Last name</label>
-                        <input type="text" class="form-control" id="lname" placeholder="Last name" required="required" autocomplete="lname">
-                      </div>
-                    </div>
-                  
-                    <div class="form-row row-eq-spacing-sm">
-                        <div class="col-sm">
-                          <label for="email" class="required">Email Address</label>
-                          <input type="email" class="form-control" id="email" placeholder="Email Address" required="required" autocomplete="email">
-                        </div>
-                      </div>
-                  
-                    <!-- Third row container -->
-                    <div class="form-row row-eq-spacing-sm">
-                        <div class="col-sm">
-                            <label for="postalCode" class="required">Postal code</label>
-                            <input type="text" class="form-control" id="postalCode" placeholder="Enter Postal Code" required="required" autocomplete="postal">
-                        </div><div class="col-sm">
-                          <label for="tel" class="required">Phone Number</label>
-                          <input type="tel" class="form-control" id="phone" name="phone" placeholder="Enter Your Cell Phone Number"  required="required" autocomplete="tel">
-                        </div>
-                      </div>
-                    
-                  
-                    <!-- Submit button container -->
-                    <div class="text-right"> <!-- text-right = text-align: right -->
-                        <input class="btn btn-primary" type="submit" value="Submit" onclick="PayloadRun()">
-                    </div>
-                  </form>
-
-            </div>
-
-            <div class="container" style="min-height: 10vh;padding:5vw;">
-                <div class="row">
-                 
-                  <div class="col-12">
-                    <div class="form-group">
-                   
-                  
-                  </div>
-                  <div><h4 id="mainreport"></h4></div>
-                  <div id="telemetry"><span style="font-size:8px;font-weight:400;" id="resultreport"></span>&nbsp;<span style="font-size:8px;font-weight:400;"  id="stats"></span></div>
-                 
-                </div>
-            </div>
-
-        </div>  
-        </div>
-        <!-- Content wrapper end -->
-    
-      </div>
-      <!-- Page wrapper end -->
-    
-    
-
+    <link href="demonstrator.css" rel="stylesheet">
+</head>
+    <body class="text-center" data-bs-theme="dark">
           
-
-                
-                
-  <!-- Halfmoon JS -->
-  <script src="https://cdn.jsdelivr.net/npm/halfmoon@1.1.1/js/halfmoon.min.js"></script>
-  </body>
-  </html>
+      <main class="form-signin w-100 m-auto" data-bs-theme="dark">
+        <img src="Payload.svg" alt="" width="300" height="146" >
+        <div id="form-container"></div>
+      </main>
+      
+    </body>
+    <script src="payload.js"></script>
+    <script></script>
+</html>
